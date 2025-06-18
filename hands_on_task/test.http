@@ -1,0 +1,70 @@
+### Get User by ID (GET /users/getById/1)
+GET http://localhost:9090/users/getById/9
+Accept: application/json
+
+HTTP/1.1 200  - OK
+content-type: application/json
+connection: close
+server: ballerina
+date: Wed, 18 Jun 2025 08:14:53 +0530
+content-encoding: gzip
+content-length: 90
+### Create User (POST /users/insert)
+POST http://localhost:9090/users/insert
+Content-Type: application/json
+
+{
+  "name": "Johnson",
+  "email": "ac@example.com",
+  "age": 25
+}
+
+
+HTTP/1.1 200  - OK
+content-type: application/json
+connection: close
+server: ballerina
+date: Wed, 18 Jun 2025 08:16:46 +0530
+content-encoding: gzip
+content-length: 90
+
+### Update User (PUT /users/update/1)
+PUT http://localhost:9090/users/update/1
+Content-Type: application/json
+
+{
+  "name": "Alice J.",
+  "email": "alicej@example.com",
+  "age": 26
+}
+
+HTTP/1.1 500  - Internal Server Error
+content-type: application/json
+connection: close
+server: ballerina
+date: Wed, 18 Jun 2025 08:14:18 +0530
+content-encoding: gzip
+content-length: 255
+
+### Delete User (DELETE /users/remove/1)
+DELETE http://localhost:9090/users/remove/1
+Accept: application/json
+
+HTTP/1.1 200  - OK
+content-type: application/json
+connection: close
+server: ballerina
+date: Wed, 18 Jun 2025 08:14:18 +0530
+content-encoding: gzip
+content-length: 60
+### Get All Users (GET /users/search)
+GET http://localhost:9090/users/search
+Accept: application/json
+
+HTTP/1.1 200  - OK
+content-type: application/json
+connection: close
+server: ballerina
+date: Wed, 18 Jun 2025 08:14:18 +0530
+content-encoding: gzip
+content-length: 60
