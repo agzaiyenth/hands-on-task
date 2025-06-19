@@ -31,7 +31,7 @@ service /users on userListener {
         return searchResult;
     }
     
-    resource function put update/[int id](User user) returns json|error {
+    resource function put update/[int id](User user)                                                                                                                            returns json|error {
         return db:updateUser(id, user);
     }
     

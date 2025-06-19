@@ -356,6 +356,14 @@ modules = [
 ]
 
 [[package]]
+org = "ballerinax"
+name = "mysql.driver"
+version = "1.8.0"
+modules = [
+	{org = "ballerinax", packageName = "mysql.driver", moduleName = "mysql.driver"}
+]
+
+[[package]]
 org = "g_agzaiyenth"
 name = "hands_on_task"
 version = "0.1.0"
@@ -363,9 +371,11 @@ dependencies = [
 	{org = "ballerina", name = "http"},
 	{org = "ballerina", name = "sql"},
 	{org = "ballerinai", name = "observe"},
-	{org = "ballerinax", name = "mysql"}
+	{org = "ballerinax", name = "mysql"},
+	{org = "ballerinax", name = "mysql.driver"}
 ]
 modules = [
-	{org = "g_agzaiyenth", packageName = "hands_on_task", moduleName = "hands_on_task"}
+	{org = "g_agzaiyenth", packageName = "hands_on_task", moduleName = "hands_on_task"},
+	{org = "g_agzaiyenth", packageName = "hands_on_task", moduleName = "hands_on_task.db"}
 ]
 

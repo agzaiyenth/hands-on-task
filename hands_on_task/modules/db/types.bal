@@ -4,3 +4,10 @@ public type User record {|
     string email;
     int age;
 |};
+public type DatabaseConfig record {
+    string host;
+    string user;
+    string password;   
+    int port;
+    string database;
+}; 
