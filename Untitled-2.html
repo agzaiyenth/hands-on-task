@@ -1,0 +1,61 @@
+<div class="main-form">
+  
+  <!-- Topic -->
+  <div class="heading">
+    <h3 id="h3">Request a Call</h3>
+  </div>
+  
+  <!-- Form -->
+  <form name="myForm" novalidate>
+    
+    <!-- Reason -->
+    <div class="form-fields">
+      <label class="question" for="reason">Reason</label>
+      <p class="description">Kindly provide a clear and valid reason for your call request.</p>
+      <input type="text" id="reason" class="field-answer" ng-model="c.reason" name="reason" required>
+      
+      <!-- Error message -->
+      <span class="error" ng-show="myForm.reason.$touched && myForm.reason.$invalid">
+        The Reason is required.
+      </span>
+    </div>
+    
+    <!-- Time Zone -->
+    <div class="form-fields">
+      
+    </div>
+    
+    <!-- Time Slot -->
+    <div class="form-fields">
+      <label class="question" for="timeSlot">Convinient Time Slot</label>
+      <p class="description">
+        Please select 1-3 specific starting times that works best for you.
+      </p>
+      <div>
+        
+      </div> 
+      <span class="error" ng-show="myForm.timeSlot.$touched && myForm.timeSlot.$invalid">
+        Please select a time zone.
+      </span>
+    </div>
+    
+    <!-- Meeting Link -->
+    <div class="form-fields">
+      <label class="question" for="meeting-link">Meeting Link</label>
+      <p class="description">If your organization cannot use Google Meet, you can provide a link to a meeting from your preferred platform.</p>
+      <input type="text" id="meeting-link" class="field-answer" ng-model="c.meetingLink" name="meeting-link">
+    </div>
+  
+    <!-- Buttons -->
+    <div class="form-fields">      
+      <button type="button" class="btn btn-primary" id="request" ng-click="c.request()" ng-disabled="myForm.$invalid">
+        Request
+      </button>      
+     
+      <button type="button" class="btn btn-secondary" id="cancel" ng-click="c.cancel()">
+        Cancel
+      </button>
+    </div>    
+  </form>
+  
+</div>
