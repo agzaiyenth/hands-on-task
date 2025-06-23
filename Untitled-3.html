@@ -1,0 +1,117 @@
+<div class="panel panel-{{options.color}} b" ng-if="data.isAssigned">
+    <!-- Button to request a call -->
+    <div style="display:flex; justify-content:space-between;">
+        <h2 class="h4 sp-attachments-header panel-title pull-left">Call</h2>
+        <widget id="request_button_and_form"></widget>
+    </div>
+
+    <!-- My Calls Section -->
+    <table class="table">
+        <tbody>
+            <tr ng-repeat="call in data.myCalls">
+                <td style="padding-left:0px;"><button class="btn-link call-number"
+                        ng-click="c.openCallDetails(call)">{{call.callNumber}}</button></td>
+                <td><span style="color: {{call.statusColor}}">{{call.stateread}}</span></td>
+                <td>
+                    <button class="icon-buttons" ng-if="call.status != 'Notes Pending'"
+                        ng-click="c.reschedule(call.callNumber)" title="Reschedule">
+                        <img src="sn_customerservice.reschedule.png" width="12" height="12" />
+                    </button>
+                    <button class="icon-buttons" ng-if="call.status != 'Notes Pending'"
+                        ng-click="c.cancelCall(call.callNumber)" title="Cancel">
+                        <img src="sn_customerservice.close.png" width="8" height="8" />
+                    </button>
+                </td>
+            </tr>
+
+            <tr ng-repeat="call in data.wso2Calls">
+                <td style="padding-left:0px;"><button class="btn-link call-number"
+                        ng-click="c.openCallDetails(call)">{{call.callNumber}}</button></td>
+                <td><span style="color: {{call.statusColor}}">{{call.stateread}}</span></td>
+                <td>
+                    <!-- Checkmark icon for accepting -->
+                    <button class="icon-buttons" ng-if="call.status == 'Request'"
+                        ng-click="c.acceptRequest(call.callNumber)" title="Accept">
+                        <img src="sn_customerservice.accept.png" width="12" height="12" />
+                    </button>
+                    <button class="icon-buttons" ng-if="call.status != 'Request'"
+                        ng-click="c.reschedule(call.callNumber)" title="Reschedule">
+                        <img src="sn_customerservice.reschedule.png" width="12" height="12" />
+                    </button>
+                    <button class="icon-buttons" ng-if="call.status == 'Request'"
+                        ng-click="c.rejectRequest(call.callNumber)" title="Rejected">
+                        <img src="sn_customerservice.close.png" width="8" height="8" />
+                    </button>
+                    <button class="icon-buttons" ng-if="call.status != 'Request'"
+                        ng-click="c.cancelCall(call.callNumber)" title="Cancel">
+                        <img src="sn_customerservice.close.png" width="8" height="8" />
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Call Details Modal -->
+<div class="modal fade" id="callDetailsModal" tabindex="-1" role="dialog" aria-labelledby="callDetailsLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="callDetailsLabel">Call Details</h4>
+            </div>
+            <div class="modal-body">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="font-weight: color: #000;">Call Number:</td>
+                        <td style="color: {{c.selectedCall.statusColor}}">{{c.selectedCall.callNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: color: #000;">Status:</td>
+                        <td style="color: {{c.selectedCall.statusColor}}">{{c.selectedCall.status}}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: color: #000;">Start Time/s:</td>
+                        <td style="font-weight: 650; white-space: pre-line;">{{c.selectedCall.startTime}}</td>
+                    </tr>
+                    <tr ng-if="c.selectedCall.meetingLink">
+                        <td style="font-weight: color: #000;">Meeting Link:</td>
+                        <td>
+                            <a ng-href="{{c.selectedCall.meetingLink}}" target="_blank" style="color: #0066cc;">
+                                {{c.selectedCall.meetingLink}}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: color: #000;">Reason:</td>
+                        <td>{{c.selectedCall.reason}}</td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="tiny-close-button" ng-click="c.closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Call Cancel Modal -->
+<div class="modal fade" id="cancelCallModal" tabindex="-1" role="dialog" aria-labelledby="cancelCallLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="cancelCallLabel">Cancel Call</h4>
+            </div>
+            <div class="modal-body">
+                <label for="cancelReason">Please provide a reason for cancellation :</label>
+                <textarea id="cancelReason" ng-model="c.cancelReason" rows="3" class="form-control"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" ng-click="c.confirmCancellation()">Confirm</button>
+                <button type="button" class="btn btn-secondary" ng-click="c.closeCancelModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
