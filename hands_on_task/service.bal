@@ -5,11 +5,11 @@ listener http:Listener userListener = new(9090);
 
 service /users on userListener {
     
-    resource function post insert(User user) returns json|error {
+    resource function post users(User user) returns json|error {
         return db:insertUser(user);
     }
     
-    resource function get getById/[int id]() returns User|json|error {
+    resource function get users/[int id]() returns User|json|error {
         return db:getUserById(id);
     }
     
@@ -31,11 +31,11 @@ service /users on userListener {
         return searchResult;
     }
     
-    resource function put update/[int id](User user)                                                                                                                            returns json|error {
+    resource function patch users/[int id](User user)                                                                                                                            returns json|error {
         return db:updateUser(id, user);
     }
     
-    resource function delete remove/[int id]() returns json|error {
+    resource function delete users/[int id]() returns json|error {
         return db:deleteUser(id);
     }
 }
