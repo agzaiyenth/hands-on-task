@@ -29,7 +29,6 @@ public function searchUsers(string? name, string? email) returns User[]|error {
     } else if (email is string) {
         query = getSearchByEmailQuery(email);
     } else {
-        // This shouldn't happen in normal flow
         return error("Invalid search parameters");
     }
    
