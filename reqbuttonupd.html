@@ -1,0 +1,228 @@
+<!-- Flatpickr CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+/>
+
+<div style="position: relative">
+  <div style="z-index: 10">
+    <span
+      ng-click="c.openCallForms()"
+      title="Request Call"
+      style="
+        cursor: pointer;
+        position: relative;
+        display: inline-block;
+        color: #717171;
+        transition: opacity 0.2s ease;
+      "
+      onmouseover="this.style.opacity='0.7'"
+      onmouseout="this.style.opacity='1'"
+    >
+      <i class="fa fa-phone" style="font-size: 20px"></i>
+      <i
+        class="fa fa-plus"
+        style="
+          font-size: 12px;
+          position: absolute;
+          top: -2px;
+          right: -4px;
+          color: #717171;
+        "
+      ></i>
+    </span>
+  </div>
+
+  <!-- Modal for the Call Request Form -->
+
+  <!-- Only show form after data is ready -->
+  <div
+    class="modal fade"
+    id="callRequestForm"
+    ng-if="c.formVisible"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="main-form">
+            <!-- Topic -->
+            <div class="heading">
+              <h4 id="h4">Call Details</h4>
+            </div>
+            <!-- Form -->
+            <form name="myForm" novalidate>
+              <!-- Reason -->
+              <div class="form-fields" ng-if="c.reasonVisible">
+                <label class="question" for="reason"
+                  >Reason<span style="color: red">*</span></label
+                >
+                <p class="description">
+                  Kindly provide the reason for your call request.
+                </p>
+                <input
+                  type="text"
+                  id="reason"
+                  class="field-answer"
+                  ng-model="c.reason"
+                  name="reason"
+                  style="width: 100%; padding: 10px"
+                  required
+                />
+                <!-- Error message when the field is empty -->
+                <span
+                  class="error"
+                  ng-show="myForm.reason.$touched && myForm.reason.$invalid"
+                >
+                  The Reason is required.
+                </span>
+              </div>
+              <hr class="line" />
+
+              <!-- Convenient Time Slots Section in Table Format -->
+              <div class="form-fields">
+                <label class="question"
+                  >Convenient Start Time/s<span style="color: red"
+                    >*</span
+                  ></label
+                >
+                <p class="description">
+                  You may provide up to three schedule options based on your
+                  availability.
+                </p>
+                <table style="width: 100%; margin-top: 15px">
+                  <tbody>
+                    <!-- Duration Row -->
+                    <tr ng-if="c.timeVisible" style="height: 50px">
+                      <td style="padding: 10px; font-weight: 500">
+                        <label class="short-question" for="duration"
+                          >Meeting Duration<span style="color: red"
+                            >*</span
+                          ></label
+                        >
+                      </td>
+                      <td style="padding: 10px">
+                        <select
+                          class="dropdown field-answer"
+                          ng-model="c.duration"
+                          required
+                          style="
+                            width: 40%;
+                            text-align: left;
+                            border-radius: 5px;
+                            font-size: 14px;
+                          "
+                        >
+                          <option value="15" class="dropdown field-answer">
+                            15 minutes
+                          </option>
+                          <option value="30" class="dropdown field-answer">
+                            30 minutes
+                          </option>
+                          <option value="45" class="dropdown field-answer">
+                            45 minutes
+                          </option>
+                          <option value="60" class="dropdown field-answer">
+                            60 minutes
+                          </option>
+                        </select>
+                      </td>
+                    </tr>
+
+                    <tr ng-if="c.acceptTrigger && c.mins" style="height: 50px">
+                      <td style="padding: 10px; font-weight: 500">
+                        <div class="short-question" for="duration">
+                          Meeting Duration:
+                        </div>
+                      </td>
+                      <td style="padding: 10px">
+                        <div>{{c.meetingDuration}} minutes</div>
+                      </td>
+                    </tr>
+
+                    <!-- Dynamic Date-Time Fields Rows -->
+                    <tr
+                      ng-repeat="startTime in c.startTimes track by $index"
+                      class="times"
+                      style="height: 50px"
+                    >
+                      <td style="padding: 10px; font-weight: 500">
+                        <label class="start-times" style="margin: 0px"
+                          >Please provide a convenient time</label
+                        >
+                        <p style="font-size: 10px; margin: 0px">
+                          *your current timezone is
+                          <span style="font-weight: 600"
+                            >{{c.data.userTimeZone}}</span
+                          >
+                        </p>
+                      </td>
+                      <td style="padding: 10px">
+                        <div class="date-time-inputs">
+                          <!-- Assign unique id dynamically -->
+                          <input
+                            type="text"
+                            class="field-answer"
+                            id="datetimepicker{{$index}}"
+                            placeholder="{{c.data.localTime}}"
+                            ng-model="startTime.time"
+                            ng-init="!startTime.time && (startTime.time = c.data.localTime)"
+                            style="
+                              width: 40%;
+                              padding: 5px;
+                              text-align: center;
+                              font-size: 14px;
+                            "
+                          />
+                          <button
+                            type="button"
+                            style="margin: 0px"
+                            ng-show="c.startTimes.length < 3 && !c.isAddButtonDisabled()"
+                            class="btn btn-secondary"
+                            ng-click="c.addStartTime(c.startTimes.length)"
+                          >
+                            +
+                          </button>
+                        </div>
+                        <p style="font-size: 10px; margin: 0px">
+                          Click on the date and time field to edit.
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Buttons -->
+              <div style="display:flex; justify-items:center; width:100%;">
+                <button
+                  type="button"
+                  style="background-color: #ff7301"
+                  ng-class="{'disabled-btn': myForm.$invalid}"
+                  class="btn"
+                  id="request"
+                  ng-click="c.submitForm()"
+                  ng-disabled="myForm.$invalid"
+                >
+                  Submit
+                </button>
+                <button
+                  type="button"
+                  class="btn"
+                  id="cancel"
+                  ng-click="c.cancel()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Close the widget container -->
+</div>
